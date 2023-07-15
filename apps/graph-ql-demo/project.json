@@ -56,7 +56,9 @@
           "browserTarget": "graph-ql-demo:build:production"
         },
         "development": {
-          "browserTarget": "graph-ql-demo:build:development"
+          "browserTarget": "graph-ql-demo:build:development",
+          "host": "0.0.0.0",
+          "disableHostCheck": true
         }
       },
       "defaultConfiguration": "development"
