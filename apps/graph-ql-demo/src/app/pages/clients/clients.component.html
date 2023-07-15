@@ -1,4 +1,8 @@
-<button class="p-2 bg-green-700 rounded flex gap-1 hover:bg-green-600">
+<button
+  class="p-2 bg-green-700 rounded flex gap-1 hover:bg-green-600"
+  (click)="clientFormDialog.showModal()"
+  (swipeLeft)="swipeLeftHandler($event)"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -15,43 +19,170 @@
   </svg>
   Add Client
 </button>
-<div>
-  <table class="border-collapse border border-slate-500">
+
+<div class="mt-2 w-full">
+  <table class="border-collapse border border-slate-500 w-full">
     <thead>
       <tr>
-        <th class="border border-slate-700 p-4">Name</th>
-        <th class="border border-slate-700 p-4">Age</th>
-        <th class="border border-slate-700 p-4">Actions</th>
+        <th
+          class="border text-start border-slate-600 p-4 font-semibold bg-slate-700"
+        >
+          Name
+        </th>
+        <th
+          class="border text-start border-slate-600 p-4 font-semibold bg-slate-700"
+        >
+          Email
+        </th>
+        <th
+          class="border text-start border-slate-600 p-4 font-semibold bg-slate-700"
+        >
+          Phone
+        </th>
+        <th
+          class="border text-start border-slate-600 p-4 font-semibold bg-slate-700"
+        >
+          Age
+        </th>
+        <th
+          class="border text-start border-slate-600 p-4 font-semibold bg-slate-700"
+        >
+          Actions
+        </th>
       </tr>
     </thead>
     <tbody class="bg-slate-800">
-      <tr *ngFor="let client of clients" class="hover:bg-slate-700">
-        <td class="border border-slate-700 p-4">{{ client.name }}</td>
-        <td class="border border-slate-700 p-4">{{ client.age }}</td>
-        <td class="border border-slate-700 p-4">
-          <button class="p-2 bg-green-700 rounded">Edit</button>
-          <button class="p-2 bg-red-700 rounded">Delete</button>
+      <tr
+        *ngFor="let client of clients; let i = index"
+        class="group"
+        (swipeLeft)="swipeLeftHandler($event)"
+      >
+        <td
+          data-label="Name"
+          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
+          class="border  p-4 "
+        >
+          {{ client.name }}
+        </td>
+        <td
+          data-label="Email"
+          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
+          class="border  p-4 "
+        >
+          {{ client.email }}
+        </td>
+        <td
+          data-label="Phone"
+          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
+          class="border  p-4 "
+        >
+          {{ client.phone }}
+        </td>
+        <td
+          data-label="Age"
+          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
+          class="border  p-4 "
+        >
+          {{ client.age }}
+        </td>
+        <td data-label="Actions" class="border  p-4"  [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'">
+          <div class="flex gap-1">
+            <button
+              class="p-2 bg-green-700 rounded-full hover:bg-green-600"
+              (click)="clientFormDialog.showModal()"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                />
+              </svg>
+            </button>
+            <button class="p-2 bg-red-700 hover:bg-red-600 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                />
+              </svg>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <!-- <table>
-        <thead>
-            <tr>
-                <th>Account</th>
-                <th>Balance</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let account of accounts">
-                <td>{{ account.name }}</td>
-                <td>{{ account.balance }}</td>
-                <td>
-                    <button class="p-2 bg-green-700 rounded">Deposit</button>
-                    <button class="p-2 bg-red-700 rounded">Withdraw</button>
-                </td>
-            </tr>
-        </tbody>
-    </table> -->
 </div>
+
+<dialog
+  #clientFormDialog
+  class="w-full max-w-screen-sm p-5 bg-slate-800 text-slate-200 backdrop:bg-slate-600 backdrop:opacity-75"
+>
+  <form class="">
+    <div class="flex flex-col gap-2">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="phone">Phone</label>
+      <input
+        type="tel"
+        name="phone"
+        id="phone"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        name="age"
+        id="age"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+  </form>
+  <div class="flex gap-2 mt-2">
+    <button
+      class="p-2 bg-green-700 rounded hover:bg-green-600 w-full"
+      (click)="clientFormDialog.close()"
+    >
+      Submit
+    </button>
+    <button
+      class="p-2 bg-slate-500 rounded hover:bg-slate-400 w-full"
+      (click)="clientFormDialog.close()"
+    >
+      Cancel
+    </button>
+  </div>
+</dialog>

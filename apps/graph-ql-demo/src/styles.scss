@@ -10,4 +10,29 @@
   h2 {
     @apply text-xl;
   }
+
+  // table responsive defaults
+  table {
+    thead {
+      tr {
+        th {
+          @apply hidden lg:table-cell;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          @apply  lg:table-cell lg:w-auto w-full before:content-[attr(data-label)_":"] before:font-bold before:pr-2 grid grid-cols-[10ch_auto];
+        }
+      }
+    }
+  }
+}
+
+@layer utilities {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
 }
