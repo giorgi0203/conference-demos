@@ -1,7 +1,6 @@
 <button
   class="p-2 bg-green-700 rounded flex gap-1 hover:bg-green-600"
   (click)="clientFormDialog.showModal()"
-  (swipeLeft)="swipeLeftHandler($event)"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -52,44 +51,64 @@
       </tr>
     </thead>
     <tbody class="bg-slate-800">
-      <tr
-        *ngFor="let client of clients; let i = index"
-        class="group"
-        (swipeLeft)="swipeLeftHandler($event)"
-      >
+      <tr *ngFor="let client of clients; let i = index" class="group">
         <td
           data-label="Name"
-          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
-          class="border  p-4 "
+          [ngClass]="
+            i % 2 === 0
+              ? 'bg-slate-600 border-slate-700'
+              : 'bg-slate-700 border-slate-600'
+          "
+          class="border p-4"
         >
           {{ client.name }}
         </td>
         <td
           data-label="Email"
-          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
-          class="border  p-4 "
+          [ngClass]="
+            i % 2 === 0
+              ? 'bg-slate-600 border-slate-700'
+              : 'bg-slate-700 border-slate-600'
+          "
+          class="border p-4"
         >
           {{ client.email }}
         </td>
         <td
           data-label="Phone"
-          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
-          class="border  p-4 "
+          [ngClass]="
+            i % 2 === 0
+              ? 'bg-slate-600 border-slate-700'
+              : 'bg-slate-700 border-slate-600'
+          "
+          class="border p-4"
         >
           {{ client.phone }}
         </td>
         <td
           data-label="Age"
-          [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'"
-          class="border  p-4 "
+          [ngClass]="
+            i % 2 === 0
+              ? 'bg-slate-600 border-slate-700'
+              : 'bg-slate-700 border-slate-600'
+          "
+          class="border p-4"
         >
           {{ client.age }}
         </td>
-        <td data-label="Actions" class="border  p-4"  [ngClass]="i % 2 === 0 ? 'bg-slate-600 border-slate-600' : 'bg-slate-700 border-slate-700'">
+        <td
+          data-label="Actions"
+          class="border p-4"
+          [ngClass]="
+            i % 2 === 0
+              ? 'bg-slate-600 border-slate-700'
+              : 'bg-slate-700 border-slate-600'
+          "
+        >
           <div class="flex gap-1">
             <button
               class="p-2 bg-green-700 rounded-full hover:bg-green-600"
-              (click)="clientFormDialog.showModal()"
+              (click)="openEdit(clientFormDialog, client)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +125,10 @@
                 />
               </svg>
             </button>
-            <button class="p-2 bg-red-700 hover:bg-red-600 rounded-full">
+            <button
+              class="p-2 bg-red-700 hover:bg-red-600 rounded-full"
+              (click)="confirmDeleteDialog.showModal()"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -133,12 +155,13 @@
   #clientFormDialog
   class="w-full max-w-screen-sm p-5 bg-slate-800 text-slate-200 backdrop:bg-slate-600 backdrop:opacity-75"
 >
-  <form class="">
+  <form class="" [formGroup]="clientForm">
     <div class="flex flex-col gap-2">
       <label for="name">Name</label>
       <input
         type="text"
         name="name"
+        formControlName="name"
         id="name"
         class="p-2 border border-slate-700 rounded bg-slate-700"
       />
@@ -148,6 +171,7 @@
       <input
         type="email"
         name="email"
+        formControlName="email"
         id="email"
         class="p-2 border border-slate-700 rounded bg-slate-700"
       />
@@ -157,6 +181,7 @@
       <input
         type="tel"
         name="phone"
+        formControlName="phone"
         id="phone"
         class="p-2 border border-slate-700 rounded bg-slate-700"
       />
@@ -166,6 +191,7 @@
       <input
         type="number"
         name="age"
+        formControlName="age"
         id="age"
         class="p-2 border border-slate-700 rounded bg-slate-700"
       />
@@ -174,15 +200,36 @@
   <div class="flex gap-2 mt-2">
     <button
       class="p-2 bg-green-700 rounded hover:bg-green-600 w-full"
-      (click)="clientFormDialog.close()"
+      (click)="handleSubmit(clientFormDialog)"
     >
       Submit
     </button>
     <button
       class="p-2 bg-slate-500 rounded hover:bg-slate-400 w-full"
-      (click)="clientFormDialog.close()"
+      (click)="closeEdit(clientFormDialog)"
     >
       Cancel
+    </button>
+  </div>
+</dialog>
+
+<dialog
+  #confirmDeleteDialog
+  class="w-full max-w-screen-sm p-5 bg-slate-800 text-slate-200 backdrop:bg-slate-600 backdrop:opacity-75"
+>
+  <p>Are you shore?</p>
+  <div class="flex gap-2 mt-2">
+    <button
+      class="p-2 bg-red-700 rounded hover:bg-red-600 w-full"
+      (click)="confirmDeleteDialog.close()"
+    >
+      Yes
+    </button>
+    <button
+      class="p-2 bg-slate-500 rounded hover:bg-slate-400 w-full"
+      (click)="confirmDeleteDialog.close()"
+    >
+      No
     </button>
   </div>
 </dialog>

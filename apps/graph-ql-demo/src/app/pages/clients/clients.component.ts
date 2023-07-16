@@ -1,6 +1,16 @@
-import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
+import {
+  HAMMER_GESTURE_CONFIG,
+  HammerGestureConfig,
+  HammerModule,
+} from '@angular/platform-browser';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Injectable()
 export class HammerConfig extends HammerGestureConfig {
@@ -10,10 +20,18 @@ export class HammerConfig extends HammerGestureConfig {
   };
 }
 
+export interface IClient {
+  id?: number;
+  name: string;
+  email: string;
+  phone: string;
+  age: number;
+}
+
 @Component({
   selector: 'org-clients',
   standalone: true,
-  imports: [CommonModule, HammerModule],
+  imports: [CommonModule, HammerModule, ReactiveFormsModule],
   templateUrl: './clients.component.html',
   styles: [],
   providers: [
@@ -97,9 +115,30 @@ export class ClientsComponent {
       age: 31,
     },
   ];
-  
-  
-  swipeLeftHandler(e: any) {
-    console.log('swipeLeftHandler()',e);
+
+  clientForm = this.fb.group({
+    name: new FormControl(''),
+    email: new FormControl(''),
+    phone: new FormControl(''),
+    age: new FormControl(),
+  });
+
+  constructor(public fb: FormBuilder, private cd: ChangeDetectorRef) {}
+
+  handleSubmit(dialog: HTMLDialogElement) {
+    console.log(this.clientForm.value);
+    dialog.close();
+  }
+
+  openEdit(dialog: HTMLDialogElement, client: IClient) {
+    this.clientForm.patchValue(client);
+    dialog.showModal();
+  }
+
+  closeEdit(dialog: HTMLDialogElement) {
+    this.clientForm.reset();
+    console.log(this.clientForm.value);
+
+    dialog.close();
   }
 }
