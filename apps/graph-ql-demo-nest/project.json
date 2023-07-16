@@ -1,0 +1,64 @@
+{
+  "name": "graph-ql-demo-nest",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/graph-ql-demo-nest/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/graph-ql-demo-nest",
+        "main": "apps/graph-ql-demo-nest/src/main.ts",
+        "tsConfig": "apps/graph-ql-demo-nest/tsconfig.app.json",
+        "assets": ["apps/graph-ql-demo-nest/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/graph-ql-demo-nest/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "graph-ql-demo-nest:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "graph-ql-demo-nest:build:development"
+        },
+        "production": {
+          "buildTarget": "graph-ql-demo-nest:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/graph-ql-demo-nest/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/graph-ql-demo-nest/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
