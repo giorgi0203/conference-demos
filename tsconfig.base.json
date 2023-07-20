@@ -16,5 +16,11 @@
     "baseUrl": ".",
     "paths": {}
   },
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "exclude": ["node_modules", "tmp"]
 }
