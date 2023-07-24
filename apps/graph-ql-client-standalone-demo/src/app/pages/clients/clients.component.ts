@@ -1,25 +1,23 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Injectable,
+  NgModule,
+  OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  HAMMER_GESTURE_CONFIG,
-  HammerGestureConfig,
-  HammerModule,
-} from '@angular/platform-browser';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 
-@Injectable()
-export class HammerConfig extends HammerGestureConfig {
-  override overrides = {
-    pinch: { enable: true },
-    rotate: { enable: false },
-  };
-}
+import { Apollo } from 'apollo-angular';
+import { ApolloClientModule } from '../../apollo-client.module';
 
+@NgModule({
+  declarations: [],
+  imports: [CommonModule, ApolloClientModule],
+  providers: [Apollo, HttpClient],
+})
+export class ClientsModule {}
 export interface IClient {
   id?: number;
   name: string;
@@ -31,18 +29,13 @@ export interface IClient {
 @Component({
   selector: 'org-clients',
   standalone: true,
-  imports: [CommonModule, HammerModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ClientsModule],
   templateUrl: './clients.component.html',
   styles: [],
-  providers: [
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: HammerConfig,
-    },
-  ],
+  providers: [Apollo, HttpClient],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientsComponent {
+export class ClientsComponent implements OnInit {
   clients = [
     {
       id: 1,
@@ -123,7 +116,30 @@ export class ClientsComponent {
     age: new FormControl(),
   });
 
-  constructor(public fb: FormBuilder, private cd: ChangeDetectorRef) {}
+  constructor(
+    public fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private apollo: Apollo
+  ) {}
+  ngOnInit(): void {
+    console.log('ngOnInit');
+
+    // this.apollo
+    //   .watchQuery({
+    //     query: gql`
+    //     query clients {
+    //       clients {
+    //         name
+    //         email
+    //       }
+    //     }
+    //   `,
+    //   })
+    //   .valueChanges.subscribe(({ data, loading, errors }) => {
+    //     console.log(data);
+
+    //   });
+  }
 
   handleSubmit(dialog: HTMLDialogElement) {
     console.log(this.clientForm.value);

@@ -23,7 +23,7 @@
     tbody {
       tr {
         td {
-          @apply  lg:table-cell lg:w-auto w-full before:content-[attr(data-label)_":"] lg:before:hidden before:font-bold before:pr-2 grid grid-cols-[10ch_auto];
+          @apply lg:table-cell lg:w-auto w-full before:content-[attr(data-label)_":"] lg:before:hidden before:font-bold before:pr-2 grid grid-cols-[10ch_auto];
         }
       }
     }

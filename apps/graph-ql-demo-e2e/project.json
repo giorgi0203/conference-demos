@@ -8,15 +8,15 @@
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/graph-ql-demo-e2e/cypress.config.ts",
-        "devServerTarget": "graph-ql-demo:serve:development",
+        "devServerTarget": "graph-ql-client-standalone-demo:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "graph-ql-demo:serve:production"
+          "devServerTarget": "graph-ql-client-standalone-demo:serve:production"
         },
         "ci": {
-          "devServerTarget": "graph-ql-demo:serve-static"
+          "devServerTarget": "graph-ql-client-standalone-demo:serve-static"
         }
       }
     },
@@ -29,5 +29,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["graph-ql-demo"]
+  "implicitDependencies": ["graph-ql-client-standalone-demo"]
 }

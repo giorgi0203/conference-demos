@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'graph-ql-demo',
+  displayName: 'graph-ql-client-standalone-demo',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/graph-ql-demo',
+  coverageDirectory: '../../coverage/apps/graph-ql-client-standalone-demo',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

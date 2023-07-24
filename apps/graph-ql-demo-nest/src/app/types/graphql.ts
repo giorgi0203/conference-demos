@@ -8,14 +8,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class Author {
+export class Client {
     id: number;
-    firstName?: Nullable<string>;
-    lastName?: Nullable<string>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
+    age?: Nullable<number>;
 }
 
 export abstract class IQuery {
-    abstract author(id: number): Nullable<Author> | Promise<Nullable<Author>>;
+    abstract client(id: number): Nullable<Client> | Promise<Nullable<Client>>;
 }
 
 type Nullable<T> = T | null;
