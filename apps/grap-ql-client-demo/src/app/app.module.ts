@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { ClientsComponent } from './clients/clients.component';
 import { ApolloClientModule } from './apollo-client.module';
+import { ClientsModule } from './features/clients/clients.module';
 
 @NgModule({
-  declarations: [AppComponent, ClientsComponent],
-  imports: [BrowserModule,ReactiveFormsModule,ApolloClientModule],
+  declarations: [AppComponent],
+  imports: [BrowserModule,ReactiveFormsModule,ApolloClientModule,ClientsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { Dialog, DialogRef } from "@angular/cdk/dialog";
 import { Apollo, gql } from 'apollo-angular';
 import { map } from 'rxjs';
+import { ClientFormDialogComponent } from '../client-form-dialog/client-form-dialog.component';
 
 export interface IClient {
   id?: number;
@@ -45,6 +47,7 @@ export class ClientsComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private cd: ChangeDetectorRef,
+    private dialog:Dialog,
     private apollo: Apollo
   ) { }
 
@@ -52,7 +55,7 @@ export class ClientsComponent implements OnInit {
     console.log('ngOnInit');
   }
 
-  handleCreate(dialog: HTMLDialogElement) {
+  handleCreate(dialog: DialogRef<ClientFormDialogComponent>) {
     console.log(this.clientForm.value);
     this.mutationLoading = true;
     if (this.clientForm.valid) {
@@ -85,7 +88,7 @@ export class ClientsComponent implements OnInit {
    
   }
 
-  handleUpdate(dialog: HTMLDialogElement) {
+  handleUpdate(dialog: DialogRef) {
     console.log(this.clientForm.value);
     this.mutationLoading = true;
     if (this.clientForm.valid) {
@@ -118,10 +121,48 @@ export class ClientsComponent implements OnInit {
    
   }
 
-  openEdit(dialog: HTMLDialogElement, client: IClient) {
-    this.clientForm.patchValue(client);
-    dialog.showModal();
+ 
+
+  openDialog(client: IClient|null) {
+
+    if (client) {
+      this.clientForm.patchValue(client);
+    }
+      
+    
+    const dialogRef =  this.dialog.open<ClientFormDialogComponent>(ClientFormDialogComponent, {
+      minWidth: '300px',
+      data: {
+        clientForm: this.clientForm,
+      },
+    });
+    dialogRef.closed.subscribe((result) => {
+      console.log(result);
+      if (result === 'create') {
+        this.handleCreate(dialogRef);
+      }
+      if (result === 'update') {
+        this.handleUpdate(dialogRef);
+      }
+      if (result === 'closeEdit') {
+        this.closeEdit(dialogRef);
+      }
+    })
   }
+
+  openCreate() {
+    const dialogRef =  this.dialog.open(ClientFormDialogComponent, {
+      minWidth: '300px',
+      data: {
+        clientForm: this.clientForm,
+      },
+    });
+    dialogRef.closed.subscribe((result) => {
+      console.log(result);
+      if (result === 'create') {
+        this.handleCreate(dialogRef);
+      }
+    })}
 
   closeEdit(dialog: HTMLDialogElement) {
     this.clientForm.reset();

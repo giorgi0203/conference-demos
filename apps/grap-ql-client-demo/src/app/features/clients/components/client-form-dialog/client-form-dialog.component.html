@@ -1,0 +1,79 @@
+<dialog
+  #clientFormDialog
+  class="w-full max-w-screen-sm p-5 bg-slate-800 text-slate-200 backdrop:bg-slate-600 backdrop:opacity-75"
+>
+  <form class="" [formGroup]="clientForm">
+    <input
+    type="text"
+    name="id"
+    formControlName="id"
+    id="id"
+    class=" hidden"
+  />
+    <div class="flex flex-col gap-2">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        formControlName="name"
+        id="name"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        formControlName="email"
+        id="email"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="phone">Phone</label>
+      <input
+        type="tel"
+        name="phone"
+        formControlName="phone"
+        id="phone"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        name="age"
+        formControlName="age"
+        id="age"
+        class="p-2 border border-slate-700 rounded bg-slate-700"
+      />
+    </div>
+  </form>
+  <div class="flex gap-2 mt-2">
+    <button
+    *ngIf="clientForm.get('id')?.value === null"
+      [disabled]="mutationLoading"
+      class="p-2 bg-green-700 rounded hover:bg-green-600 w-full"
+      (click)="handleCreate(clientFormDialog)"
+    >
+      Create
+    </button>
+    <button
+    *ngIf="clientForm.get('id')?.value !== null"
+      [disabled]="mutationLoading"
+      class="p-2 bg-green-700 rounded hover:bg-green-600 w-full"
+      (click)="handleUpdate(clientFormDialog)"
+    >
+      Update
+    </button>
+    <button
+      [disabled]="mutationLoading"
+      class="p-2 bg-slate-500 rounded hover:bg-slate-400 w-full"
+      (click)="handleCloseEdit(clientFormDialog)"
+    >
+      Cancel
+    </button>
+  </div>
+</dialog>
